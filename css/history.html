@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Project</title>
+    <style>
+        .nav {
+            height: 41px;
+            border-top: 3px rgb(255, 179, 204);
+            border-bottom: 4px solid #edeef0;
+            background-image: url(safari.jpg);
+            line-height: 41px;
+            position: fixed;
+        }
+        
+        .nav a {
+            font-size: 20px;
+            font-family: '华文彩云';
+            font-weight: 900;
+            color: rgb(36, 2, 75);
+            text-decoration: none;
+            display: inline-block;
+            padding: 0 40px;
+            height: 40px;
+        }
+        
+        a.contact {
+            margin-right: 0px;
+            margin-left: 600px;
+        }
+        
+        .nav a:hover {
+            background-color: hotpink;
+            color: rgb(255, 255, 255);
+        }
+        
+        a.contact:hover {
+            background-image: url(face.png);
+        }
+        
+        body {
+            background-image: url(background1.jpg);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-position: center 0;
+            background-attachment: fixed;
+        }
+        
+        table {
+            margin: auto;
+            width: 1100px;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        p {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="..\index.html">项目综述</a>
+        <a href="history.html">项目进展</a>
+        <a href="..\ex.html">项目成果</a>
+        <a href="..\contact.html" class="contact">滑稽</a>
+    </div>
+
+
+    <table>
+        <!--DWLayoutTable-->
+
+        <tr>
+            <td width="1491" height="63" valign="top">
+                <div align="center">
+                    <p class="STYLE1">&nbsp;</p>
+                </div>
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td height="3"></td>
+        </tr>
+    </table>
+    <table>
+        <!--DWLayoutDefaultTable-->
+        <tr>
+            <td width="9" height="55"></td>
+            <td width="132"></td>
+            <td width="1210" rowspan="4" valign="top">
+                <h3>&nbsp;</h3>
+                <h2><span class="STYLE8 STYLE5">》目录索引</span> </h2>
+                <ul id="markdown-toc">
+                    </h2>
+                    <li><a href="#section" id="markdown-toc-section">一、摘要</a></li>
+                    <li><a href="#section-1" id="markdown-toc-section-1">二、设计概况</a></li>
+                    <ul>
+                        <li><a href="#section-2" id="markdown-toc-section-2">2.1 设计目的</a></li>
+                        <li><a href="#section-3" id="markdown-toc-section-3">2.2 设计用途、功能</a></li>
+                    </ul>
+                    <li><a href="#section-4" id="markdown-toc-section-4">三、硬件设计</a> </li>
+                    <ul>
+                        <li><a href="#section-5" id="markdown-toc-section-5">3.1 硬件设计思想和电原理图</a></li>
+                        <ul>
+                            <li><a href="#section-6" id="markdown-toc-section-6">1 光敏传感器模块</a></li>
+                            <li><a href="#section-7" id="markdown-toc-section-7">2 舵机模块</a></li>
+                            <li><a href="#section-8" id="markdown-toc-section-8">3 驻极体话筒模块</a></li>
+                            <li><a href="#section-9" id="markdown-toc-section-9">4 WS2801LED灯带模块</a></li>
+                        </ul>
+                        <li><a href="#section-10" id="markdown-toc-section-10">3.2 模块使用方法</a></li>
+                        <ul>
+                            <li><a href="#section-11" id="markdown-toc-section-11">1 光敏传感器模块</a></li>
+                            <li><a href="#section-12" id="markdown-toc-section-12">2 SG90舵机模块</a></li>
+                            <li><a href="#section-13" id="markdown-toc-section-13">3 驻极体话筒模块</a></li>
+                            <li><a href="#section-14" id="markdown-toc-section-14">4 WS2801灯带模块</a></li>
+                        </ul>
+                    </ul>
+                    <li><a href="#section-15" id="markdown-toc-section-15">四、软件设计</a></li>
+                    <ul>
+                        <li><a href="#section-16" id="markdown-toc-section-16">4.1 软件功能 </a></li>
+                        <ul>
+                            <li><a href="#section-17" id="markdown-toc-section-17">1 物理外挂部分</a></li>
+                            <li><a href="#section-18" id="markdown-toc-section-18">2 LED律动部分</a></li>
+                        </ul>
+                        <li><a href="#section-19" id="markdown-toc-section-19">4.2 软件流程图 </a></li>
+                        <li><a href="#section-20" id="markdown-toc-section-20">4.3 软件各函数功能 </a></li>
+                        <ul>
+                            <li><a href="#section-21" id="markdown-toc-section-21">1 舵机驱动函数</a></li>
+                            <li><a href="#section-22" id="markdown-toc-section-22">2 黑块识别函数</a></li>
+                            <li><a href="#section-23" id="markdown-toc-section-23">3 音频获取函数</a></li>
+                            <li><a href="#section-24" id="markdown-toc-section-24">4 FFT库</a></li>
+                            <li><a href="#section-25" id="markdown-toc-section-25">5 频谱分析函数</a></li>
+                            <li><a href="#section-26" id="markdown-toc-section-26">6 色彩设置函数</a></li>
+                            <li><a href="#section-27" id="markdown-toc-section-27">7 色轮函数</a></li>
+                            <li><a href="#section-28" id="markdown-toc-section-28">8 Adafruit_WS2801.h库</a></li>
+                        </ul>
+                    </ul>
+                    <li><a href="#section-29" id="markdown-toc-section-29">五、系统测试过程及测试数据</a></li>
+                    <ul>
+                        <li><a href="#section-30" id="markdown-toc-section-30">5.1 物理外挂部分</a></li>
+                        <li><a href="#section-31" id="markdown-toc-section-31">5.2 律动LED灯部分</a></li>
+                        <ul>
+                            <li><a href="#section-32" id="markdown-toc-section-32">1 对于零频截取值的调试</a></li>
+                            <li><a href="#section-33" id="markdown-toc-section-33">2 音量归一化参数的调试</a></li>
+                        </ul>
+                    </ul>
+
+                    <li><a href="#section-34" id="markdown-toc-section-34">六、参数指标</a> </li>
+                    <ul>
+                        <li><a href="#section-35" id="markdown-toc-section-35">6.1 律动LED灯的参数指标</a></li>
+                    </ul>
+                    <li><a href="#section-36" id="markdown-toc-section-36">七、设计所需全部资源</a> </li>
+                    <li><a href="#section-37" id="markdown-toc-section-37">八、参考资料</a> </li>
+                    <li><a href="#section-38" id="markdown-toc-section-38">九、附：代码</a> </li>
+                    <h2 id="section">一、摘要</h2>
+                    <p>《钢琴块》是一款非常流行的手机音乐游戏，玩家根据音乐节奏点击黑色方块，按照顺序点，不可错点、漏点，否则会导致游戏失败。不少玩家由于手速的困扰，在一些关卡迟迟不能通关，也就无法升级并解锁新的钢琴曲。为了解决这个问题我们设计了一款游戏物理外挂，使用机器来超越人的手速，方便通关。但仅仅让机器来帮助通关过程会显得枯燥，不具有观赏性，因而我们又设计了一个律动LED灯装置，能够根据乐音的律动发出炫目的光采。 <br /> 这款带律动LED灯的《钢琴块》物理外挂使用了Arduino单片机来设计。Arduino是由一块单板的微控制器和一套开发软件组成，相比其他开发平台，其优越性在于其易用性和简易性。
+                        <br /> 在游戏物理外挂部分我们采用光敏传感器识别黑块，由单片机处理，并控制舵机旋转机械臂，由其末端固定的电容笔点击屏幕，实现触屏，能够轻松通关，打破游戏记录，实现人手所远不及的速度。 <br /> 在富有观赏性的律动的LED灯带部分。我们使用集成驻极体话筒进行声信号的收集，在Arduino上使用FFT对声音做离散快速傅里叶变换，分析频谱，将音量和期望主频作为自变量来改变灯带的颜色和亮度。而且此灯带拥有多种发光模式，可以通过按钮实现切换。律动LED真正让钢琴块游戏实现了视听结合，让玩家在富有节奏的视觉氛围中更加享受物理外挂的快速操作带来的精神愉悦。
+                    </p>
+                    <p>关键词：Arduino Mega2560 光敏传感器 舵机 LED灯带 </p>
+                    <h2 id="section-1">二、设计概况</h2>
+                    <h3 id="section-2">2.1、设计目的</h3>
+                    <p class="STYLE6">1、在当今社会，娱乐已经成为人们生活中不可缺少的一部分，而游戏更是我们大多数青年人的娱乐活动。有一些游戏，例如别踩白块儿这款游戏，只要手速够快，得分就高。但是受限<br /> 于人的生理结构，最高记录越来越难于去打破。于是我们设计出了物理外挂，用机器去打破纪录就会轻松许多，并且创新的加上了LED彩带，利用其色彩高低起伏跳跃效果，将动听的音
+                        <br /> 符已极具冲击力的视觉形式展现出来，使人在玩游戏的过程中，不仅体会到轻松获得高分的爽快感，并且有着视觉和听觉上的体验感，大大增加了游戏的可玩性和趣味性以及体验感。 <br /> 2、通过课程设计，了解、学习和掌握单片机的基本原理与使用方法。学习单片机设计产品的步骤与方法，锻炼创新思维，提高动手能力与团队合作意识。
+                    </p>
+                    <h3 id="section-3">2.2、设计用途、功能</h3>
+                    <p>通过物理外挂去打破《钢琴块》游戏的纪录，达到人手所不能的速度，体验获得高分的爽感；配合游戏的钢琴声，使LED灯带发出随音乐律动的色彩炫动，让整个游戏给人带来视觉和听觉的震撼。 <br /> 实物图如下：
+                    </p>
+                    <p>物理外挂装置：</p>
+                    <p class="STYLE6"><img src="18.jpg" width="502" height="339" /></p>
+                    <p>律动LED灯装置：<span class="STYLE6"><br />
+	      <img src="19.jpg" width="505" height="284" /><br />
+      </span></p>
+                    <h2 id="section-4">三、硬件设计</h2>
+                    <h3 id="section-5">3.1、硬件设计思想和电原理图</h3>
+                    <p>物理外挂部分使用了光敏传感器模块和舵机模块，由光敏传感器检测黑块信息，舵机旋转带动电容笔按压屏幕实现触控。 </p>
+                    <h4 id="section-6">1.光敏传感器模块</h4>
+                    <p> 光敏传感器是对外界光信号或光辐射有响应或转换功能的敏感装置。光敏传感器是利用光敏元件将光信号转换为电信号的传感器，它的敏感波长在可见光波长附近，包括红外线波长和紫外线波长。 <br /> 项目使用的是四脚光敏传感器，由于只是识别黑色和白色两种颜色，所以可只使用DO口向单片机传送0或1信息。硬件原理图如下：
+                    </p>
+                    <p><img src="20.jpg" width="380" height="210" /> <img src="21.jpg" width="202" height="206" /></p>
+                    <h4 id="section-7">2、舵机模块</h4>
+                    <p>舵机是一种位置伺服的驱动器，主要是由外壳、电路板、无核心马达、齿轮与位置检测器所构成。一般舵机旋转的角度范围是0 度到180 度。舵机的转动的角度是通过调节PWM（脉冲宽度调制）信号的占空比来实现的。硬件工作原理图如下：</p>
+                    <p><img src="22.jpg" width="531" height="130" /></p>
+                    <p class="STYLE10">LED律动灯的硬件总体可以分为两个模块：驻极体话筒模块和WS2801灯带模块。在两个模块与单片机的连接上进行了限流、滤波等设计，下面是这些硬件的设计思想和原理图：</p>
+                    <h4 id="section-8" class="STYLE6">3、驻极体话筒</h4>
+                    <p><img src="1.jpg" width="308" height="187" /></p>
+                    <p>驻极体话筒的内部由一个场效应管和一篇金属膜片构成，声音导致金属极板震动，空气隙变化导致电容变化，在电荷量恒定时引起了电压的变化。</p>
+                    <p><img src="2.jpg" width="437" height="218" /> <img src="3.jpg" width="469" height="230" /></p>
+                    <p>一般驻极体话筒输出的电压变化范围较小，但是它阻抗较高，不能直接与放大电路相连，而是必须连接阻抗变换器，通常使用一个场效应管和二极管组成阻抗变换器，通过场效应管输出电压。 </p>
+                    <p><img src="4.jpg" width="436" height="201" /></p>
+                    <p>我们最终使用的集成驻极体话筒使用了一个驻极体接收器、一个四位运算放大器、7个电阻、4个电容、一个三极管。与上图的硬件架构原理相同。 <br /> 在初期，我们尝试了自己设计驻极体话筒，其中使用了100&#956;F的电容进行阻直流的滤波，这样在后期进行傅里叶变换时可以大大减小0频的分量，简化数据分析，提高运行速度。
+                    </p>
+                    <h4 id="section-9" class="STYLE6">4、WS2801LED灯带模块</h4>
+                    <p class="STYLE6"><img src="5.jpg" width="416" height="266" /></p>
+                    <p>WS2801是一个恒定电流LED驱动器，拥有三个独立的输出驱动通道，每个通道均能实现独立的256级PWM灰度控制，可在不改变LED发光色彩的条件下实现256级LED灰度控制，并能输出高达200mA的恒定LED驱动电流，WS2801内部包含串联移位寄存器，数据锁存器，输出寄存器，带隙基准电压源，内部振荡器和可编程恒定电流驱动器。硬件原理图如下：</p>
+                    <p class="STYLE6"><img src="6.jpg" width="596" height="348" /></p>
+                    <p>我们使用的WS2801模块集成了32个LED，其芯片工作电压为3.3&#8212;5.5V，在最开始的输入LED处拉出了四个引脚，分别为V+，GND，C1，D1，分别代表Vcc，GND，时钟信号引脚，数字信号引脚。 <br /> 在我们的灯带上，时钟信号引脚是绿色引线连接的，数字信号引脚是黄色引线。将四个引脚分别接到Arduino的5V，GND和两个数字IO口引脚上，并配合WS2801.h库文件就能实现对32个LED的控制。 </p>
+                    <p class="STYLE10">两个模块之外，我们安装了一个按钮，可以通过按下按钮来切换不同的发光模式。将以上的两个模块和按钮与Arduino连接，电原理图为：</p>
+                    <p class="STYLE6"><img src="23.jpg" width="551" height="274" /></p>
+                    <h3 id="section-10">3.2、硬件使用方法</h3>
+                    <h4 id="section-11">1、光敏传感器模块</h4>
+                    <p>光敏传感器（使用DO口）的使用无需调用库函数，只需在set up函数中设置引脚模式为输入然后用digitalRead函数检测时高低电平即可。 <br /> pinMode(4,INPUT); <br /> pinMode(5,INPUT); <br /> pinMode(6,INPUT); <br /> pinMode(7,INPUT);
+                    </p>
+                    <h4 id="section-12">2、SG90舵机</h4>
+                    <p>舵机的工作电压为??4.8V&#8212;6V，项目使用了四个舵机，所以外接了9V的电源使舵机能够正常工作。</p>
+                    <p><img src="24.jpg" width="565" height="447" /></p>
+                    <p>四个舵机的四个信号接口分别接到Arduino的PWM输出接口上，并配合Servo库函数实现对舵机的控制。使用到的库函数功能如下： <br /> servo.write( ) 设置舵机旋转角度 </p>
+                    <h4 id="section-13" class="STYLE6">3、驻极体话筒模块</h4>
+                    <p>将驻极体话筒的UCC引脚通过一个1000欧姆限流电阻连入Arduino Mage2560的+5V引脚，将GND和OUT口分别接入Arduino的GND、A0引脚。将AO串口状态设为INPUT，可以看到输入的声音波形。 </p>
+                    <p><img src="8.jpg" width="430" height="235" /> </p>
+                    <p>声音输入模块介绍完毕。接下来的频谱分析只需要通过A0端口截取的数据就可以了。 </p>
+                    <p>
+                        <h4 id="section-14" class="STYLE6">4、WS2801LED灯带模块</p>
+                    </h4>
+                    <p>WS2801芯片下的灯带需要用库文件驱动。我们设置Arduino数字引脚5设置为接受时钟信号（绿色引线），设置Arduino数字引脚2设置为接受数字信号（黄色引线），就可以通过Adafruit_WS2801.h库对LED进行控制。 </p>
+                    <h4 class="STYLE6">
+                        <p class="STYLE6"><img src="9.jpg" width="618" height="174" /></p>
+                    </h4>
+                    <p>Adafruit_WS2801.h库的使用核心是Adafruit_WS2801函数对灯带元素的建立、strip.setPixelColor()函数对色彩的设置和Color()函数对颜色元素格式的设置。这些函数的使用例在其自带的示例中，这里不做过多赘述。 <br /> Additionally，由于我们使用的是32个LED的灯带，在设置灯带颜色时应当以32位的RGB数组对每个灯元进行赋值。 </p>
+                    <h4 class="STYLE6">
+                        <h2 id="section-15">四、软件设计</h2>
+                        <h3 id="section-16">4.1 软件功能</h3>
+                        <h4 id="section-17">物理外挂部分：</h4>
+                    </h4>
+                    <p>采用了arduino mega2560来进行程序设计，舵机部分使用arduino的Servo库，光敏传感器部分则直接使用了arduino数字引脚，置为输入状态即可使单片机接收光敏传感器得到的黑块信息。经过一系列的尝试，我们自主设计出了识别函数，创新性地引入了迭代算法，实现了黑块的识别功能。另外我们还设计了具有三个可调参数的舵机函数，实现了舵机转动功能，并方便后期调试。 </p>
+                    <h4 class="STYLE6">
+                        <h4 id="section-18">律动LED部分：</h4>
+                    </h4>
+                    <p>音频获取函数： 截取256位声信号，输出到FFT自变量数组。 <br /> &#9;FFT库： 对自变量数组进行快速傅里叶变换，得到各个频率的本征值，取频谱范围有效的128位本征值输出。 <br /> &#9;频谱分析函数： 对频谱进行分析，输出音量值和主频期望值。 <br /> &#9;色彩设置函数： 归一音量和频谱，根据按钮状态，用两种不同的模式，通过音量和主频期望值设置32个LED的色彩状态。 <br /> &#9;色轮函数： 对0-&gt;255的主频值分割色轮输出对应颜色。
+                        <br /> &#9;Adafruit_WS2801.h库: 设置并控制LED灯带状态和颜色设置函数。</p>
+                    <h4 class="STYLE6">
+                        <p>&nbsp;</p>
+                        <h3 id="section-18">4.2 软件流程</h3>
+                        <h4>物理外挂部分</h4>
+                        <p><img src="25.jpg" width="509" height="331" /></p>
+                        <h4>律动LED部分</h4>
+                    </h4>
+                    <p>宏定义LED数目32、音频截取256周期、输出主频归一比率255/4000、音量归一化比率（调试量）、零频截取值（调试量）、delaytime（调试量）。 <br /> &#9;首先，音频获取函数通过两个中断函数截取一段音频输入到FFT变换数组，然后进行FFT变换，输出128为频谱能量值，然后使用频谱分析函数输出一个音量、一个输出主频，使用两个归一化将其输入到色彩设置函数，色彩设置函数根据色轮返回的颜色值对32个LED进行颜色设定，最后Adafruit_WS2801将灯带刷新。
+                    </p>
+                    <h4 class="STYLE6">
+                        <p><br />
+                        </p>
+                        <h3 id="section-19">4.3 软件各函数功能</h3>
+                        <h4 id="section-20">1、舵机驱动函数（以一个舵机为例）</h4>
+                    </h4>
+                    <p class="STYLE5">void knob1() <br /> { <br /> for (int pos=pos1;pos&lt;=Amp+pos1;pos+=1) <br /> { <br /> servo1.write(pos);
+                        <br /> delay(interval);
+                        <br /> } <br /> delay(interval_add); <br /> for (int pos=Amp+pos1;pos&gt;=pos1;pos-=1) <br /> { <br /> servo1.write(pos);
+                        <br /> delay(interval);
+                        <br /> } }
+                    </p>
+                    <p align="justify">在该函数中：pos1为舵机初始位置的参数，Amp为舵机一次敲击的振幅，interval为舵机每1&#176;的步进延迟时间，interval_add为落下动作和抬起动作之间的延迟时间，用于增加电容笔与屏幕的碰触时间，防止断触。这几个参数同装置性能之间的关系为： <br /> 对于Amp，振幅过小，会导致按下不彻底，出现断触，而振幅过大，会导致装置振动剧烈，对部分零件造成破坏。对于interval，数值太大会使得速度降低，而数值太小又会使接触不充分，这便需要增大interval_add使舵机在落下与抬起的中间暂留一段时间（几十ms），从而使电容笔和屏幕充分接触。
+                    </p>
+                    <h4 class="STYLE6">
+                        <h4 id="section-21">2、黑块识别函数</h4>
+                    </h4>
+                    <p align="justify">其实我们最初的黑块识别函数设计非常简单，即在一个loop循环内依次检测四个光敏传感器是否有黑块信息（数字信号）传入，然后驱动相应的舵机函数knob1,knob2,knob3,knob4。但这种方法有很大的问题：当黑块下落较慢时，会有一个黑块重复敲击现象，而且在一个循环中只允许按4、5、6、7的顺序进行敲击，在黑块下落较快时容易动作不连贯导致电容笔敲错。 <br />
+                        <span class="STYLE5">if(digitalRead(4)==HIGH) <br />
+        knob1(); <br />
+        if(digitalRead(5)==HIGH) <br />
+        knob2(); <br />
+        if(digitalRead(6)==HIGH) <br />
+        knob3(); <br />
+        if(digitalRead(7)==HIGH) <br />
+        knob4()</span>;</p>
+                    <p align="justify"> 随后我们充分考虑了这个游戏的特点，即不存在连续两个相同位置的黑块需要敲击的情况，和较少的并排两个黑块需要敲击的情况，我们采用了迭代法，即记录四个传感器中采集到黑块的那一个传感器编号，然后与上一轮触发敲击的传感器编号相比较，只有当这两个编号不同时，才会触发这一轮的敲击。然后再将这一轮的编号投入到下一轮循环当中比较，以此类推。这种算法的好处是：一个loop循环只能产生0或1次敲击，连贯性增强，同时避免了连续敲击同一黑块的可能，减少失误。</p>
+                    <p class="STYLE5">if(digitalRead(4)==HIGH) <br /> temp=1; <br /> if(digitalRead(5)==HIGH) <br /> temp=2; <br /> if(digitalRead(6)==HIGH) <br /> temp=3; <br /> if(digitalRead(7)==HIGH) <br /> temp=4; <br /> if(temp!=flag) <br /> { <br /> switch(temp)
+                        <br /> { <br /> case 1:<br />
+                        <br /> knob1(); <br /> break; <br /> case 2: <br /> knob2(); <br /> break; <br /> case 3: <br /> knob3(); <br /> break; <br /> case 4: <br /> knob4(); <br /> break; <br /> } <br /> } </p>
+                    <h4 class="STYLE6">
+                        <h4 id="section-22">律动LED部分</h4>
+                    </h4>
+                    <p>本次用到的软件主要有FFT库、Adafruit_WS2801.h库。本次自主设计的函数是音频获取、频谱分析和色彩设置、色轮函数，下面是这几个函数和函数库的设计思想：</p>
+                    <h4 class="STYLE6">
+                        <h4 id="section-23">1. 音频获取函数</h4>
+                    </h4>
+                    <p> 我们需要在一段时间内获取A0端口的模拟信号并进行AD转换，放到FFT变换的数组中。 <br /> 设置X个循环，在循环开始和结束使用中断函数cli()和sei()进行音频截取，即在单片机未中断的运行周期内获取A0端口的模拟信号，将其AD转换后输入到FFT变换的数组中。 <br /> 这样做的目的是防止输入端在单片机计算时占用单片机资源，避免了重复设置引脚状态。缺点是不能连续截取音频，最终输出效果会有明显的周期性。由于FFT库的分析上限是256，经过尝试256是最好的（在短周期内的取样越多频谱越精确，因为时间不足以经过一个单独波包）不过通过优化频谱分析可以将周期缩短至难以察觉。
+                    </p>
+                    <h4 class="STYLE6">
+                        <h4 id="section-24">2. FFT库</h4>
+                    </h4>
+                    <p>FFT方法使用离散快速傅里叶变换的原理对一段音频进行分析。此库函数较为冗杂，且均为分析函数，FFT变换后会返回128位频谱能量信息。FFT库的原理和设计在网上有详细介绍，此处不过多赘述。 </p>
+                    <h4 class="STYLE6">
+                        <h4 id="section-25">3. 频谱分析函数</h4>
+                    </h4>
+                    <p>对FFT变换出的频谱进行分析，以此得到声信号时刻的能量、主频。 <br /> 变换后，FFT库的分析不能很好显示出频谱的主频。体现为零频分量过多和主频峰值有偏移，经过探究，其原理和解决方案为： <br /> 对于零频分量，是由于驻极体话筒接收的是电平信息，声音波形表示的是极板的振动幅度，皆为正数且环境噪声使得振动幅度永不为零。对此我们提出两个解决方案：其一，硬件方面在输出端接一个电容滤掉直流分量，保留音频震动的分量，这样可以将0频峰值降低。其二，在分析频谱时刨除零频，只关注后面的声音，这样可以彻底解决零频的问题。
+                        <br /> 对于主频峰值问题，我们发现在接受低音、中音时的频谱最大峰值很好的表征了声信号的主频。但是在接受高音时就很不稳定了，这一方面是音频采集设备的信号间隔问题，当高音的频率大于Arduino采样频率时音频无法被很好记录；另一方面是歌曲和背景噪音的缘故。一般的歌曲都会在低音区放上bass或cello来使歌曲整体厚重，不显得单薄和空旷。故声音频谱天然就带有很大的低音分量，故分析高音时常出现最高频不在我们感到的主旋律上。对于这个问题，我们调试了许多种分析函数来使得函数能大致表征其主频，经过多次尝试，确认了使用频谱相较于均值的标准差作为主频。
+                        <br /> 至此，问题解决。对于能量，我们取频谱的均值作为音量；对于主频，计算频谱相较能量均值的标准差，将此标准差作为主频输出到颜色设置函数。 </p>
+                    <h4 id="section-26">4. 色彩设置函数</h4>
+                    <p> 基于上面给出的音量和主频，我们用一个32位循环函数对每个LED进行颜色设置。其中我们写了两种颜色模式：一种是根据主频将全灯带设置为一种颜色，一种是将灯带颜色设置为上一次的颜色和这一次的颜色的渐变。并通过按钮控制：按一次切换一次发光模式。 </p>
+                    <h4 id="section-27">5. 色轮函数 </h4>
+                    <p>为了让输入的主频对应所有颜色，基于色轮的知识，注意到输出主频上限在4000，故用float数据存储，将主频归一至0-&gt;255的区间内，在将其分割为0-&gt;85, 85-&gt;170, 170-&gt;255三个区间，对应红绿色轮、红蓝色轮、蓝绿色轮。这其中的颜色设置使用Adafruit_WS2801库的标准。 </p>
+                    <h4 id="section-28">6. Adafruit_WS2801.h库</h4>
+                    <p> Adafruit_WS2801是针对WS2801芯片开发的串口协议。在LED初始化、色彩设置和色轮函数均有用到。 <br />
+                    </p>
+                    <h2 id="section-29">五、系统测试过程及测试数据</h2>
+                    <h3 id="section-30">5.1 物理外挂部分</h3>
+                    <p>在实验课上学习了舵机的使用方法后，我们很快地做出了第一款外挂装置： </p>
+                    <p><img src="26.jpg" width="521" height="329" /></p>
+                    <p>但如前所述，第一版的装置程序设计部分几乎是照搬了网上某些帖子中的原理和方法，结构上设计比较简陋，只是对塑料板进行了简单的粘合。在性能方面经常出现重复敲击的现象，最好成绩只有每秒钟6~7块，远不及&#8220;外挂&#8221;的要求，而且在使用时四个舵机剧烈的抖动使得电容笔偏离应有的位置而不时地断触，在使用一段时间后甚至出现了粘合部位多处断裂的现象，整个装置接近散架，这些显现的问题使我们不得不考虑设计改进方案甚至当有必要时，从头重做。 <br /> 随后我们在算法上原创性地引入了迭代的思路，在结构上采用了乐高积木的骨架，这种结构的好处是：
+                        <br /> 1.在定型之前，整体结构可以反复地进行调整。 <br /> 2.舵机及连杆通过旋钮零件安装在底座上，能够适度地旋转，方便根据手机屏幕调整舵机的位置。 <br /> 3.乐高零件具有一定的刚性，在基础的调整结束后，可在零件的拼接处涂热熔胶，是整体结构更为坚固、稳定。
+                    </p>
+                    <p><img src="27.jpg" width="326" height="251" /><img src="28.jpg" width="340" height="249" /></p>
+                    <p>采用算法和结构的创新后我们的外挂装置取得了成功</p>
+                    <p><img src="29.jpg" width="642" height="483" /><br />
+                        <img src="30.jpg" width="377" height="216" /><img src="31.jpg" width="424" height="215" /></p>
+                    <p align="justify">轻松取得了人手所远不及的成绩。 <br /> 在舵机函数中引入三个可调参数，选用该游戏的经典模式（30s看敲击黑块数）进行参数的调整：
+                    </p>
+                    <table border="1" cellspacing="0">
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>amp </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>interval </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>Interval_add </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>30s敲击块数 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>断触次数 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>22 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>2.4 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>7 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>134 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>4 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>24 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>2.2 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>7 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>141 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>3 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>25 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>2.2 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>8 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>147 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>3 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>27 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>1.8 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>8 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>154 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>2 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>27 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>1.4 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>9 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>166 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>0 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>27 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>1.1 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>9 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>179 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>1 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="166" valign="top">
+                                <p>27 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>1.1 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>10 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>191 </p>
+                            </td>
+                            <td width="166" valign="top">
+                                <p>0 </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p align="justify">一个比较好的参数组合为(27,1.1,10)。 <br /> 用这个参数组合再次测试速度，我们最终又将成绩从14块每秒提升到了15块每秒： </p>
+                    <p><img src="32.jpg" width="300" height="289" /><br /> &#9;
+                    </p>
+                    <h3 id="section-31">律动LED灯部分</h3>
+                    <h4 id="section-32">1、对于零频截取值的调试</h4>
+                    <p>零频截取值频谱分析时，FFT输出的128位能量值的开始下标。频谱输出为一个256周期中的声音频谱</p>
+                    <table width="587" height="600" border="1" cellspacing="0">
+                        <tr>
+                            <td width="228" valign="top">
+                                <p>Start_num </p>
+                            </td>
+                            <td width="420" valign="top">
+                                <p>频谱输出 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="228" height="118" valign="top">
+                                <p>0 </p>
+                            </td>
+                            <td width="420" valign="top">
+                                <p><img width="290" height="112" src="课程设计报告_wps1.jpg">&nbsp;</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="228" height="144" valign="top">
+                                <p>4 </p>
+                            </td>
+                            <td width="420" valign="top">
+                                <p><img width="296" height="138" src="课程设计报告_wps2.jpg">&nbsp;</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="228" height="148" valign="top">
+                                <p>10 </p>
+                            </td>
+                            <td width="420" valign="top">
+                                <p><img width="334" height="142" src="课程设计报告_wps3.jpg">&nbsp;</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="228" valign="top">
+                                <p>20 </p>
+                            </td>
+                            <td width="420" valign="top">
+                                <p><img width="334" height="149" src="课程设计报告_wps4.jpg"> </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>可以看出，我们从10截取时已经具有良好的性质了，为了保真，我们就选取0频截止数为10。 </p>
+                    <h4 id="section-33">2、音量归一化参数的调试</h4>
+                    <p>从频谱分析中输出的音量没有确切范围，或者说随着音源不同而范围不同。对此使用音量归一化参数调试，决定以多少能量值的音量才能去触发一个LED</p>
+                    <table border="1" cellspacing="0">
+                        <tr>
+                            <td width="171" valign="top">
+                                <p>音量归一化参数N </p>
+                            </td>
+                            <td width="356" valign="top">
+                                <p>一般声音下LED状态 </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="171" valign="top">
+                                <p>1 </p>
+                            </td>
+                            <td width="356" valign="top">
+                                <p><img width="263" height="143" src="课程设计报告_wps5.png">&nbsp;</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="171" valign="top">
+                                <p>2 </p>
+                            </td>
+                            <td width="356" valign="top">
+                                <p><img width="267" height="147" src="课程设计报告_wps6.png">&nbsp;</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="171" valign="top">
+                                <p>4 </p>
+                            </td>
+                            <td width="356" valign="top">
+                                <p><img width="267" height="156" src="课程设计报告_wps7.png">&nbsp;</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="171" valign="top">
+                                <p>5 </p>
+                            </td>
+                            <td width="356" valign="top">
+                                <p><img width="268" height="143" src="课程设计报告_wps8.png"> </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>经过对比，对音量归一化参数，在分度值为1时，N=4已经足够满足要求。 </p>
+                    <h2 id="section-34">六、参数指标</h2>
+                    <h3 id="section-35">6.1 LED律灯部分 </h3>
+                    <p>上面给出了音量效果和频谱稳定性的参数调试，其效果都是显然的。接下来针对律动LED本身的目的做一个指标：音乐变化导致的颜色变化的多少。而对应这个指标参数的自变量就是频谱分析的函数。 <br /> 注：这里有点泛函的意思。我们拿频谱分析函数作为自变量，拿LED变幻色彩的多少作为因变量。 <br /> 对于频谱分析，我们采取了多种方法，有对声信号进行直接分析的，例如取两个极大值之间的间隔的最大值，这样可以一定程度上表征音乐的频率；还有取一个时间段内峰值的数量，但这些方法在音量输出一定的时候，都使输出稳定在一个值附近，基本表征了音量，而不是频率：
+                    </p>
+                    <p><img src="14.jpg" width="313" height="115" /></p>
+                    <p>对这样的函数，其指标：色彩变幻，因为几乎仅与音量有关，在一段音量变化不大的范围内颜色基本不变。这就使得指标很低，被淘汰。 <br /> 我们又尝试了对fft频谱做分析，首先观察到低音频谱较为缓和、有很大很圆的峰存在，而高音频谱是密集的、尖而细的，故采取和声频谱一样的分析方法：取间隔最大值和峰总个数。在一段音量相对平和的音频输入中，最终频率输出值为： </p>
+                    <p><img src="16.jpg" width="300" height="246" /></p>
+                    <p>注意到缓急可以用差的变化来表示，所以最后尝试了对FFT频谱做当前值与平均值的差的绝对值加和，可以通俗理解为标准差的一种衍生。在一段相对平稳的音频中其表现为： </p>
+                    <p><img src="17.jpg" width="253" height="217" /></p>
+                    <p>由此可见，对于一般情况，使用FFT频谱相对标准差作为函数输出有着更好的色彩变幻能力，是众函数中指标最高的，我们就采取了这个函数作为输出。</p>
+                    <h2 id="section-36">七、设计所需全部资源</h2>
+                    <p>Arduino Mega 2560, 电阻若干、杜邦线若干、按钮若干、LED灯两个、四路运算放大器一个、三极管一个、电容若干、集成驻极体话筒一个、WS2801灯带一个、面包板一个</p>
+                    <h2 id="section-37">八、参考数据</h2>
+                    <p align="justify">[1]https://www.basemu.com/controlling-multiple-servo-motors-with-arduino.html <br /> [2]http://nicekwell.net/blog/20161008/bie-cai-bai-kuai-er-bot.html<br /> [3].https://tieba.baidu.com/p/4971062063?red_tag=1096023503
+                        <br /> [4].http://codingdict.com/project/python/48584.html</p>
+                    <h2 id="section-38"><a href="..\documents/codes.txt">九、附：代码</a></h2>
+                    <p class="STYLE6"></p>
+                    <p class="STYLE6">&nbsp;</p>
+            </td>
+            <td width="120">&nbsp;</td>
+            <td width="19" rowspan="4"></td>
+        </tr>
+
+        <tr>
+            <td height="553"></td>
+            <td></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td height="533"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td height="1730"></td>
+            <td></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td height="17">&nbsp;</td>
+            <td colspan="4" valign="top" bgcolor="#FFFFCC">
+                <hr size="10" />
+            </td>
+        </tr>
+        <tr>
+            <td height="194">&nbsp;</td>
+            <td colspan="3" valign="top" bgcolor="#CCCCCC">
+                <table width="1451" height="149" border="0">
+                    <!--DWLayoutTable-->
+                    <tr>
+                        <td width="175" height="2"></td>
+                        <td width="50"></td>
+                        <td width="1140"></td>
+                        <td width="68"></td>
+                    </tr>
+                    <tr>
+                        <td height="4"></td>
+                        <td colspan="2" valign="top">
+                            <hr />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td height="18"></td>
+                        <td colspan="2" valign="top">
+                            <h3>&nbsp;</h3>
+                        </td>
+                        <td></td>
+                    </tr>
+
+
+                    <tr>
+                        <td height="24"></td>
+                        <td></td>
+                        <td valign="top">
+                            <h3 class="STYLE5">&nbsp;</h3>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td height="21"></td>
+                        <td></td>
+                        <td valign="top">
+                            <h3 class="STYLE5">&nbsp;</h3>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td height="66"></td>
+                        <td></td>
+                        <td>&nbsp;</td>
+                        <td></td>
+                    </tr>
+
+
+                    <!--DWLayoutTable-->
+
+
+
+
+
+
+
+
+
+                </table>
+            </td>
+            <td valign="top" bgcolor="#CCCCCC">
+                <!--DWLayoutEmptyCell-->&nbsp;</td>
+        </tr>
+    </table>
+</body>
+
+</html>
